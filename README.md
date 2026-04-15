@@ -42,3 +42,13 @@ If a client sends the same `DELETE` request multiple times:
 
 ### Business Logic: Deletion Safety
 To maintain **referential integrity**, my API blocks the deletion of any room that contains sensors. This prevents "Orphaned Sensors" (sensors linked to a room ID that no longer exists). A `409 Conflict` error is returned to inform the user that the room must be cleared before decommissioning.
+
+## Part 3: Sensor Operations & Filtering
+
+### Technical Consequence of @Consumes mismatch
+If a client sends data as `text/plain` or `application/xml` while the method is restricted to `application/json`, JAX-RS will automatically block the request and return a **415 Unsupported Media Type** status code. This ensures the API only processes data formats it can safely parse into Java objects.
+
+### Filtering: Query Parameters vs. Path Parameters
+I implemented sensor filtering using `@QueryParam` (e.g., `/sensors?type=CO2`) rather than Path Parameters.
+**Justification:**
+Path parameters are used to identify a **specific resource** (e.g., `/sensors/101`). Query parameters are the standard RESTful way to **filter or sort a collection**. Using query parameters makes the API more flexible, as multiple filters (like type and status) can be combined easily without creating complex URL structures.
