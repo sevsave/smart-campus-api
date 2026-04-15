@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Consumes(MediaType.APPLICATION_JSON)
 public class SensorResource {
 
-    // POST: Register a new sensor (Part 3.1)
+
     @POST
     public Response registerSensor(Sensor sensor) {
         // Validation: Does the Room ID exist? (Crucial for high marks)
@@ -33,7 +33,7 @@ public class SensorResource {
         return Response.status(Response.Status.CREATED).entity(sensor).build();
     }
 
-    // GET with Filtering (Part 3.2)
+
     @GET
     public List<Sensor> getSensors(@QueryParam("type") String type) {
         if (type != null && !type.isEmpty()) {
@@ -43,5 +43,14 @@ public class SensorResource {
                     .collect(Collectors.toList());
         }
         return List.copyOf(DataStorage.getSensors().values());
+    }
+
+    // Add this at the bottom of SensorResource.java
+    @Path("/{sensorId}/readings")
+    public SensorReadingResource getReadingResource(@PathParam("sensorId") String sensorId) {
+        if (!DataStorage.getSensors().containsKey(sensorId)) {
+            throw new NotFoundException("Sensor not found");
+        }
+        return new SensorReadingResource(sensorId);
     }
 }
