@@ -32,7 +32,7 @@ public class SensorReadingResource {
         // 1. Save to history
         history.computeIfAbsent(sensorId, k -> new ArrayList<>()).add(reading);
 
-        // 2. Side Effect (Part 4.2): Update the parent Sensor's current value
+        
         Sensor parentSensor = DataStorage.getSensors().get(sensorId);
         if (parentSensor != null) {
             parentSensor.setCurrentValue(reading.getValue());

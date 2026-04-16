@@ -52,3 +52,13 @@ If a client sends data as `text/plain` or `application/xml` while the method is 
 I implemented sensor filtering using `@QueryParam` (e.g., `/sensors?type=CO2`) rather than Path Parameters.
 **Justification:**
 Path parameters are used to identify a **specific resource** (e.g., `/sensors/101`). Query parameters are the standard RESTful way to **filter or sort a collection**. Using query parameters makes the API more flexible, as multiple filters (like type and status) can be combined easily without creating complex URL structures.
+
+## Part 4: Deep Nesting & Sub-Resources
+
+### Architectural Benefits of Sub-Resource Locators
+Using the Sub-Resource Locator pattern (delegating `/{sensorId}/readings` to a separate class) significantly improves **code maintainability**.
+1. **Separation of Concerns:** `SensorResource` only handles sensor metadata, while `SensorReadingResource` handles the logic for historical data.
+2. **Reduced Complexity:** It prevents a "God Class" scenario where one file contains hundreds of lines of code for every possible nested path.
+
+### Data Consistency & Side Effects
+My implementation ensures **Data Consistency** by triggering a side effect during the `POST` of a new reading. When a reading is recorded, the parent `Sensor` object’s `currentValue` is automatically updated. This ensures that a `GET` request to the sensor resource always reflects the most recent data from the hardware readings.
