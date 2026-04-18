@@ -15,11 +15,17 @@ public class GlobalExceptionMapper implements ExceptionMapper<Throwable> {
         int status = 500; // Default to Internal Server Error
         String message = "An unexpected error occurred on the smart campus server.";
 
-        if (exception instanceof WebApplicationException) {
+        if (exception instanceof RoomNotEmptyException) {
+            status = 409;
+        } else if (exception instanceof LinkedResourceNotFoundException) {
+            status = 422;
+        } else if (exception instanceof SensorUnavailableException) {
+            status = 403;
+        } else if (exception instanceof WebApplicationException) {
             status = ((WebApplicationException) exception).getResponse().getStatus();
-            message = exception.getMessage();
+        } else {
+            message = "An unexpected error occurred on the smart campus server.";
         }
-
         ErrorMessage errorEntity = new ErrorMessage(message, status);
 
         return Response.status(status)
