@@ -8,7 +8,7 @@ public class SensorReading {
     private double value;
 
     public SensorReading() {
-        // Automatically generate a unique ID as requested in the specs
+        // Automatically generate a unique ID 
         this.id = UUID.randomUUID().toString();
         this.timestamp = System.currentTimeMillis();
     }

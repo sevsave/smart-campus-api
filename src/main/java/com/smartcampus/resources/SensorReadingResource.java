@@ -1,5 +1,6 @@
 package com.smartcampus.resources;
 
+import com.smartcampus.exceptions.SensorUnavailableException;
 import com.smartcampus.models.Sensor;
 import com.smartcampus.models.SensorReading;
 import com.smartcampus.services.DataStorage;
@@ -29,11 +30,15 @@ public class SensorReadingResource {
 
     @POST
     public Response addReading(SensorReading reading) {
+         Sensor parentSensor = DataStorage.getSensors().get(sensorId);
+        if (parentSensor != null && "MAINTENANCE".equalsIgnoreCase(parentSensor.getStatus())) {
+            throw new SensorUnavailableException("Sensor is in MAINTENANCE mode and cannot accept readings.");
+        }
         // 1. Save to history
         history.computeIfAbsent(sensorId, k -> new ArrayList<>()).add(reading);
 
         
-        Sensor parentSensor = DataStorage.getSensors().get(sensorId);
+       //update live value
         if (parentSensor != null) {
             parentSensor.setCurrentValue(reading.getValue());
         }
