@@ -5,7 +5,7 @@
 package com.smartcampus.models;
 /**
  *
- * @author User
+ * @author Sewmini Senevirathna / 20240079 / w2149627
  */
 
 public class ErrorMessage {

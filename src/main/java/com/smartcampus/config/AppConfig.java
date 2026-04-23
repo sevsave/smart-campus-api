@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.smartcampus.config;
-
+/**
+ *
+ * @author Sewmini Senevirathna / 20240079 / w2149627
+ */
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 

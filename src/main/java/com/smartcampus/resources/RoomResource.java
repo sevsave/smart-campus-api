@@ -6,7 +6,7 @@ package com.smartcampus.resources;
 
 /**
  *
- * @author User
+ * @author Sewmini Senevirathna / 20240079 / w2149627
  */
 
 import com.smartcampus.exceptions.RoomNotEmptyException;
@@ -59,7 +59,7 @@ public class RoomResource {
 
         if (room == null) return Response.status(Response.Status.NOT_FOUND).build();
 
-        // Safety Logic: Block deletion if sensors are present (Requirement Part 2.2)
+       
         if (!room.getSensorIds().isEmpty()) {
             throw new RoomNotEmptyException("Cannot delete room: Active sensors are still assigned.");
             

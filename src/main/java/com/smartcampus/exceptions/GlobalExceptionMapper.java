@@ -4,6 +4,10 @@
  */
 package com.smartcampus.exceptions;
 
+/**
+ *
+ * @author Sewmini Senevirathna / 20240079 / w2149627
+ */
 import com.smartcampus.models.ErrorMessage;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;

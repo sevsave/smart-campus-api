@@ -5,7 +5,7 @@
 package com.smartcampus.resources;
 /**
  *
- * @author User
+ * @author Sewmini Senevirathna / 20240079 / w2149627
  */
 
 import com.smartcampus.exceptions.LinkedResourceNotFoundException;

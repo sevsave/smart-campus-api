@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.smartcampus.exceptions;
+
 /**
  *
- * @author User
+ * @author Sewmini Senevirathna / 20240079 / w2149627
  */
-
 public class RoomNotEmptyException extends RuntimeException {
     public RoomNotEmptyException(String message) { super(message); }
 }
