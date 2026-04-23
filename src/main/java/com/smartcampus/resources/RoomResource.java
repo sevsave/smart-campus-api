@@ -33,6 +33,11 @@ public class RoomResource {
         if (room.getId() == null || room.getId().isEmpty()) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Room ID is required").build();
         }
+        if (DataStorage.getRooms().containsKey(room.getId())) {
+            return Response.status(Response.Status.CONFLICT)
+                           .entity("Error: Room ID '" + room.getId() + "' already exists.")
+                           .build();
+        }
         DataStorage.getRooms().put(room.getId(), room);
         return Response.status(Response.Status.CREATED).entity(room).build();
     }
