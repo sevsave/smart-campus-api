@@ -6,17 +6,34 @@
 
 ---
 
-## ?Project Overview
+## Project Overview
 The **Smart Campus API** is a RESTful web service designed to manage university IoT infrastructure. It allows administrators to manage Rooms and Sensors, while tracking real-time environmental data through sensor readings. This project demonstrates high-level JAX-RS concepts, including HATEOAS for discovery, Sub-Resource Locators for nested data, and Custom Exception Mapping for robust error handling.
 
 ---
 
-## ? Build & Launch Instructions
+##  Build & Launch Instructions
 
 ### Prerequisites
 * **Java JDK 17** (or higher)
 * **Apache Maven**
 * **Apache Tomcat 9.0**
+
+### Step-by-Step Setup
+
+1. **Clone the Repository:**
+   ```bash
+   git clone [INSERT_YOUR_GITHUB_LINK_HERE]
+
+### **2. Build the Project**
+In NetBeans, right-click the project in the **Projects** pane and select **Clean and Build**. This will trigger Maven to download all necessary dependencies and package the application into a `.war` file.
+
+### **3. Launch the Server**
+Right-click the project and select **Run**. Ensure that **Apache Tomcat 9.0** is selected as the target server. The IDE will deploy the WAR file and start the service.
+
+### **4. Access the API**
+Once the server is running, the API base URL will be:
+`http://localhost:8080/smart-campus-api/api/v1/`
+
 
 ## Part 1: Service Architecture & Setup
 
@@ -163,3 +180,28 @@ I implemented a custom filter class implementing `ContainerRequestFilter` and `C
 3. **Maintainability:** If the logging format needs to change (e.g., adding a timestamp or an IP address), it only needs to be updated in one file rather than hundreds of methods.
 
 ---
+
+##  Sample cURL Commands
+Test the API's core functionality using these commands in your terminal:
+
+```bash
+# 1. API Discovery (HATEOAS)
+curl -X GET http://localhost:8080/smart-campus-api/api/v1/
+
+# 2. Register a New Room
+curl -X POST http://localhost:8080/smart-campus-api/api/v1/rooms \
+-H "Content-Type: application/json" \
+-d '{"id": "R101", "name": "Computing Lab"}'
+
+# 3. Register a Sensor to a Room
+curl -X POST http://localhost:8080/smart-campus-api/api/v1/sensors \
+-H "Content-Type: application/json" \
+-d '{"id": "S1", "roomId": "R101", "type": "CO2", "status": "ACTIVE"}'
+
+# 4. Post a New Sensor Reading
+curl -X POST http://localhost:8080/smart-campus-api/api/v1/sensors/S1/readings \
+-H "Content-Type: application/json" \
+-d '{"value": 450.5}'
+
+# 5. Filter Sensors by Type (Query Param)
+curl -X GET "http://localhost:8080/smart-campus-api/api/v1/sensors?type=CO2"
